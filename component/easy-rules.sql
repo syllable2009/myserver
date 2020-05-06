@@ -2,7 +2,8 @@
 CREATE TABLE rule_info
 (
   id                               BIGINT AUTO_INCREMENT
-    PRIMARY KEY COMMENT '唯一自增id',
+    PRIMARY KEY
+  COMMENT '唯一自增id',
   rule_type                        VARCHAR(128)                       NULL
   COMMENT '规则归属业务',
   rule_name                        VARCHAR(128)                       NULL
@@ -29,26 +30,31 @@ CREATE TABLE rule_info
   COMMENT '规则信息维护表'
   ENGINE = InnoDB;
 
-
 -- auto-generated definition
 CREATE TABLE rule_detail
 (
-  id                               BIGINT AUTO_INCREMENT
-    PRIMARY KEY COMMENT '唯一自增id',
-  pid BIGINT NOT NULL   COMMENT '父id',
-  rule_1                        VARCHAR(128)                       NULL
+  id        BIGINT AUTO_INCREMENT
+    PRIMARY KEY
+  COMMENT '唯一自增id',
+  pid       BIGINT                             NOT NULL
+  COMMENT '父id',
+  rule_1    VARCHAR(128)                       NULL
   COMMENT '规则1，< == > <= >= equals',
-  value_1                        VARCHAR(128)                       NULL
+  value_1   VARCHAR(128)                       NULL
   COMMENT '规则值1',
 
-  rule_2                        VARCHAR(128)                       NULL
+  rule_2    VARCHAR(128)                       NULL
   COMMENT '规则2，< == > <= >= equals',
-  value_2                        VARCHAR(128)                       NULL
+  value_2   VARCHAR(128)                       NULL
   COMMENT '规则值2',
-  if_active        TINYINT(1) DEFAULT '1'             NOT NULL
+  if_active TINYINT(1) DEFAULT '1'             NOT NULL
   COMMENT '1-有效，0-无效',
-  remark                           VARCHAR(1000)                      NULL
-  COMMENT '备注'
+  remark    VARCHAR(1000)                      NULL
+  COMMENT '备注',
+  sort DOUBLE NOT NULL
+  COMMENT '排序，规则匹配会按照由小到大开始',
+  value VARCHAR(255) NULL
+  COMMENT '第三方穿透值/计算值'
 )
   COMMENT '规则详细信息表'
   ENGINE = InnoDB;
