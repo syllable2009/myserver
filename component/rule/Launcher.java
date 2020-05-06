@@ -6,6 +6,7 @@ import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.RuleBuilder;
+import org.jeasy.rules.core.RulesEngineParameters;
 
 import com.google.common.collect.Lists;
 
@@ -52,7 +53,12 @@ public class Launcher {
     rules.register(airConditioningRule2);
 
     // fire rules on known facts
-    RulesEngine rulesEngine = new DefaultRulesEngine();
+    RulesEngineParameters parameters = new
+      RulesEngineParameters().skipOnFirstAppliedRule(true)
+      .skipOnFirstFailedRule(false)
+      .skipOnFirstNonTriggeredRule(false);
+    RulesEngine rulesEngine = new DefaultRulesEngine(parameters);
+    //    RulesEngine rulesEngine = new DefaultRulesEngine();
     rulesEngine.fire(rules, facts);
     log.info("{}", facts);
   }

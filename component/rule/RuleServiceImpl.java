@@ -8,6 +8,7 @@ import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.RuleBuilder;
+import org.jeasy.rules.core.RulesEngineParameters;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -30,7 +31,8 @@ public class RuleServiceImpl implements RuleService {
       return null;
     }
     Long ruleId = dto.getRuleId();
-    // 获取rules,按生序排列
+    // 获取头表，构建规则引擎
+    // 获取rules,按升序排列，构建规则集合
     ArrayList<RuleDetail> ruleList = Lists.newArrayList();
     // 模拟
     ruleList.add(RuleDetail.builder()
@@ -61,7 +63,12 @@ public class RuleServiceImpl implements RuleService {
     facts.put("value", dto.getValue());
     facts.put("match", dto.getMatchs());
 
-    RulesEngine rulesEngine = new DefaultRulesEngine();
+    RulesEngineParameters parameters = new
+      RulesEngineParameters().skipOnFirstAppliedRule(true)
+      .skipOnFirstFailedRule(false)
+      .skipOnFirstNonTriggeredRule(false);
+    RulesEngine rulesEngine = new DefaultRulesEngine(parameters);
+    //    RulesEngine rulesEngine = new DefaultRulesEngine();
     rulesEngine.fire(rules, facts);
     return dto;
   }

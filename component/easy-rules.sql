@@ -39,22 +39,25 @@ CREATE TABLE rule_detail
   pid       BIGINT                             NOT NULL
   COMMENT '父id',
   rule_1    VARCHAR(128)                       NULL
-  COMMENT '规则1，< == > <= >= equals',
+  COMMENT '规则1，< = > <= >= equals',
   value_1   VARCHAR(128)                       NULL
-  COMMENT '规则值1',
+  COMMENT '规则值1，最小值',
 
   rule_2    VARCHAR(128)                       NULL
-  COMMENT '规则2，< == > <= >= equals',
+  COMMENT '规则2，< = > <= >= equals',
   value_2   VARCHAR(128)                       NULL
-  COMMENT '规则值2',
+  COMMENT '规则值2，最大值',
   if_active TINYINT(1) DEFAULT '1'             NOT NULL
   COMMENT '1-有效，0-无效',
-  remark    VARCHAR(1000)                      NULL
+  remark    VARCHAR(255)                       NULL
   COMMENT '备注',
-  sort DOUBLE NOT NULL
+  sort      DOUBLE                             NOT NULL
   COMMENT '排序，规则匹配会按照由小到大开始',
-  value VARCHAR(255) NULL
+  value     VARCHAR(255)                       NULL
   COMMENT '第三方穿透值/计算值'
 )
   COMMENT '规则详细信息表'
   ENGINE = InnoDB;
+
+CREATE INDEX rule_detail_pid_sort_index
+  ON rule_detail (pid, sort);
