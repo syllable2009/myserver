@@ -8,11 +8,11 @@ CREATE TABLE rule_info
   COMMENT '规则归属业务',
   rule_name                        VARCHAR(128)                       NULL
   COMMENT '规则名称',
-  skip_on_first_applied_rule       TINYINT(1)                         NOT NULL
+  skip_on_first_applied_rule       TINYINT(1)                         NOT NULL DEFAULT 1
   COMMENT '从第一条开始，匹配一条就会跳过后面规则匹配，不匹配则一直往下执行',
-  skip_on_first_non_triggered_rule TINYINT(1)                         NOT NULL
+  skip_on_first_non_triggered_rule TINYINT(1)                         NOT NULL  DEFAULT 0
   COMMENT '从第一条开始，匹配一条才会往下执行，不匹配则跳过后面',
-  skip_on_first_failed_rule        TINYINT(1) DEFAULT '1'             NOT NULL
+  skip_on_first_failed_rule        TINYINT(1) DEFAULT '1'             NOT NULL   DEFAULT 1
   COMMENT '如果执行条件判断时发生异常就会跳过后面规则匹配',
   rule_priority_threshold          INT                                NULL
   COMMENT '大于指定的优先级则不进行匹配,从0开始',
@@ -28,7 +28,8 @@ CREATE TABLE rule_info
   COMMENT '备注'
 )
   COMMENT '规则信息维护表'
-  ENGINE = InnoDB;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 -- auto-generated definition
 CREATE TABLE rule_detail
@@ -57,7 +58,8 @@ CREATE TABLE rule_detail
   COMMENT '第三方穿透值/计算值'
 )
   COMMENT '规则详细信息表'
-  ENGINE = InnoDB;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 CREATE INDEX rule_detail_pid_sort_index
   ON rule_detail (pid, sort);
