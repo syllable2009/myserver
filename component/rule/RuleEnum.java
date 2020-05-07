@@ -41,18 +41,21 @@ public enum RuleEnum {
   }
 
   public static boolean compare(RuleDetail rd, String d) {
-    boolean b = ruleCompare(rd.getRule1(), rd.getValue1(), d);
-    if (StringUtils.isEmpty(rd.getRule2()) || StringUtils.isEmpty(rd.getValue2())) {
-      return b;
-    } else {
-      return b && ruleCompare(rd.getRule2(), rd.getValue2(), d);
+    boolean b = false;
+    if (!StringUtils.isEmpty(rd.getRule1()) && !StringUtils.isEmpty(rd.getValue1())) {
+      b = ruleCompare(rd.getRule1(), rd.getValue1(), d);
     }
+
+    if (!StringUtils.isEmpty(rd.getRule2()) && !StringUtils.isEmpty(rd.getValue2())) {
+      b = b && ruleCompare(rd.getRule2(), rd.getValue2(), d);
+    }
+    return b;
   }
 
   private static boolean ruleCompare(String code, String value, String input) {
 
     RuleEnum ruleEnum = RuleEnum.of(code);
-    log.error("{}-{}", code, ruleEnum);
+
     if (Objects.isNull(ruleEnum)) {
       return false;
     }
