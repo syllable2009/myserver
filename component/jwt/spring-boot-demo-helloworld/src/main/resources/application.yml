@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /demo
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 604800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: login
+      refresh: refresh
+      register: "register"
+
+# Logging configuration
+#logging:
+#  level:
+#    org.springframework:
+#      data: DEBUG
+#      security: DEBUG
