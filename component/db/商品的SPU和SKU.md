@@ -25,3 +25,25 @@ sp_data存储的就是一个JSON数组，比如颜色为黑色，容量为32G的
     }
 ]
 
+以前的做法
+商品的SKU信息作为商品的关联信息，在修改商品信息时会同时进行修改。以前的做法是直接删除该商品的所有SKU信息，再重新添加。
+这样就会导致商品SKU中的ID被修改，由于在购物车和订单商品中关联了商品SKU的ID，就会导致原来的ID失效的问题。
+改进后的做法
+首先我们需要和前端约定下，新增的商品SKU信息不传ID，要修改的商品SKU信息传ID，删除的直接不传SKU信息。
+然后我们可以根据传入的SKU信息来确定需要新增、修改、删除的SKU信息，这样就可以做到在更新商品SKU信息时，不改变原来商品SKU的ID了，具体流程如下。
+![image](https://github.com/syllable2009/myserver/blob/master/screenShots/sku3.png)
+
+
+商品表product
+id product_name ... 
+
+商品sku表sku
+id product_id sku_json price pic 
+
+商品库存表stock
+id product_id sku_id stock库存数量 lock数量
+
+
+
+
+
