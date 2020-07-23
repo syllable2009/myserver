@@ -40,6 +40,8 @@ id product_name ...
 商品sku表sku
 id product_id sku_json price pic 
 
+单位也可以看作是一种sku属性，但如果需要单位换算的话，还应该有特别表存对应关系
+
 商品库存表stock
 id product_id sku_id stock库存数量 lock数量
 
