@@ -1,13 +1,12 @@
 package com;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
- * @author
- * 2018-10-24 11:48
+ * @author 2018-10-24 11:48
  **/
 public class RegexUtil {
 
@@ -136,6 +135,7 @@ public class RegexUtil {
 
     /**
      * 校验文件id
+     *
      * @param attachmentId
      * @return
      */
