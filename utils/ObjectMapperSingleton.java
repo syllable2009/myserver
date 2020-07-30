@@ -3,10 +3,15 @@ package com;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.pagehelper.Page;
+
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.StringWriter;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -15,7 +20,7 @@ import java.util.Objects;
 @Slf4j
 public class ObjectMapperSingleton<T> {
 
-    private volatile static ObjectMapper OBJECT_MAPPER = ObjectMapperSingleton.get(); //声明成 volatile
+    private volatile static ObjectMapper instance = ObjectMapperSingleton.get(); //声明成 volatile
 
     private ObjectMapperSingleton() {
     }
@@ -60,7 +65,7 @@ public class ObjectMapperSingleton<T> {
     public static String obj2string(Object obj) {
         StringWriter sw = new StringWriter();
         try {
-            OBJECT_MAPPER.writeValue(sw, obj);
+            instance.writeValue(sw, obj);
         } catch (Exception e) {
         }
         return sw.toString();
@@ -72,9 +77,9 @@ public class ObjectMapperSingleton<T> {
     public static <T> List<T> str2list(String jsonStr, Class<T> cls) {
         List<T> objList = null;
         try {
-            JavaType t = OBJECT_MAPPER.getTypeFactory().constructParametricType(
+            JavaType t = instance.getTypeFactory().constructParametricType(
                     List.class, cls);
-            objList = OBJECT_MAPPER.readValue(jsonStr, t);
+            objList = instance.readValue(jsonStr, t);
         } catch (Exception e) {
             log.error("json转换错误： 将字符串转list对象");
         }
@@ -88,7 +93,7 @@ public class ObjectMapperSingleton<T> {
 
         T obj = null;
         try {
-            obj = OBJECT_MAPPER.readValue(jsonStr, cls);
+            obj = instance.readValue(jsonStr, cls);
         } catch (Exception e) {
             log.error("Json转换错误,将字符串转对象 str2obj error:{}", e.getMessage());
         }
@@ -102,9 +107,9 @@ public class ObjectMapperSingleton<T> {
 
         Page<T> objList = null;
         try {
-            JavaType t = OBJECT_MAPPER.getTypeFactory().constructParametricType(
+            JavaType t = instance.getTypeFactory().constructParametricType(
                     Page.class, cls);
-            objList = OBJECT_MAPPER.readValue(jsonStr, t);
+            objList = instance.readValue(jsonStr, t);
         } catch (Exception e) {
         }
         return objList;
@@ -116,7 +121,7 @@ public class ObjectMapperSingleton<T> {
     public static JsonNode str2node(String jsonStr) {
 
         try {
-            return OBJECT_MAPPER.readTree(jsonStr);
+            return instance.readTree(jsonStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
