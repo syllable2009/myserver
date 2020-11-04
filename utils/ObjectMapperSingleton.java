@@ -1,13 +1,8 @@
-package com;
+package com.company.project.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.github.pagehelper.Page;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.StringWriter;
@@ -63,6 +58,9 @@ public class ObjectMapperSingleton<T> {
      * 将对象转换为json字符串
      */
     public static String obj2string(Object obj) {
+        if (Objects.isNull(obj)) {
+            return null;
+        }
         StringWriter sw = new StringWriter();
         try {
             instance.writeValue(sw, obj);
