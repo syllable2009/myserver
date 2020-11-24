@@ -15,7 +15,7 @@ docker cp 容器id:容器内路径  主机目的路径
 
 # 数据卷技术：容器和数据分离，数据共享
 三种挂载方式：
--v 容器内路径			#匿名挂载
+-v 容器内路径			#匿名挂载,-v只写了容器内的路径，没有写容器外的路径
 -v 卷名：容器内路径:ro		#具名挂载
 -v /宿主机路径：容器内路径 #指定路径挂载:rw docker volume ls 是查看不到的
 docker volume ls 查看所有的volume的情况,可以查看具名挂载和匿名挂载
@@ -60,5 +60,19 @@ CMD /usr/local/apache-tomcat-9.0.35/bin/startup.sh && tail -F /usr/local/apache-
 
 
 docker network ls 列出这些docker内置的网络模式
+Docker使用的是Linux的桥接，宿主机是一个Docker容器的网桥 docker0
+Docker中所有网络接口都是虚拟的，虚拟的转发效率高（内网传递文件）
+只要容器删除，对应的网桥一对就没了！
+
+docker run -d -P --name tomcat03 --link tomcat02 tomcat
+
+# docker-compose
+Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。
+如果你还不了解 YML 文件配置，可以先阅读 YAML 入门教程。
+Compose 使用的三个步骤：
+使用 Dockerfile 定义应用程序的环境。
+使用 docker-compose.yml 定义构成应用程序的服务，这样它们可以在隔离环境中一起运行。
+最后，执行 docker-compose up 命令来启动并运行整个应用程序。
+docker-compose version 查看安装的版本
 
 
