@@ -57,9 +57,9 @@ docker run -it ubuntu /bin/bash 其中-i -t 表示创建一个提供交互式she
 docker run --name mydaemon -d ubuntu /bin/sh -c "while true;do echo hello world;sleep 1;done" 创建守护式容器
 注意:每个容器都有一个唯一的ID，作为容器的标识。每个容器也有个唯一的名称，在用docker run命令创建时可以通过 --name 名称 来指定，如果不指定，系统会自动产生一个名称。
 docker run [--name  mycontainer]  -i -t ubuntu /bash
-docker container kill [containID] 对于那些不会自动终止的容器，必须使用docker container kill 命令手动终止。
+docker [container] kill [containID] 对于那些不会自动终止的容器，必须使用docker [container] kill 命令手动终止。
 image 文件生成的容器实例，本身也是一个文件，称为容器文件，也就是说，一旦容器生成，就会同时存在两个文件： image 文件和容器文件。而且关闭容器并不会删除容器文件，只是容器停止运行而已。
-docker container rm [containerID] 终止运行的容器文件，依然会占据硬盘空间，可以使用docker container rm命令删除。
+docker []container] rm [containerID] 终止运行的容器文件，依然会占据硬盘空间，可以使用docker []container] rm命令删除。
 
 #创建镜像
 1.commit创建
@@ -106,10 +106,9 @@ docker container kill命令终止容器运行，相当于向容器里面的主�
 （3）docker container logs
 docker container logs命令用来查看 docker 容器的输出，即容器里面 Shell 的标准输出。如果docker run命令运行容器的时候，没有使用-it参数，就要用这个命令查看输出。
 $ docker container logs [containerID]
-（4）docker container exec
+（4）docker container exec = docker attach
 docker container exec命令用于进入一个正在运行的 docker 容器。如果docker run命令运行容器的时候，没有使用-it参数，就要用这个命令进入容器。一旦进入了容器，就可以在容器的 Shell 执行命令了。
 docker exec -it 80e2791b519d /bin/bash
-
 $ docker container exec -it [containerID] /bin/bash
 （5）docker container cp
 docker container cp命令用于从正在运行的 Docker 容器里面，将文件拷贝到本机。下面是拷贝到当前目录的写法。
@@ -142,4 +141,8 @@ $ docker container cp [containID]:[/path/to/file] .
 </plugin>
 
 构建镜像：mvn compile jib:build
+
+
+docker tag <image> username/repository:tag  # Tag <image> for upload to registry
+docker push username/repository:tag 
 
