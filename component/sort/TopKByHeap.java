@@ -48,7 +48,7 @@ public class TopKByHeap {
 
     private static void quickSort() {
         int[] array = {7, 1, 3, 5, 13, 9, 3, 6, 11};
-        int len;
+        int len = array.length;
         if (array == null
                 || (len = array.length) == 0
                 || len == 1) {
