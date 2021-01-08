@@ -1,10 +1,10 @@
 package com.neo.datastructure.map;
 
-import static java.util.Objects.hash;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map.Entry;
 
-import lombok.extern.slf4j.Slf4j;
+import static java.util.Objects.hash;
 
 /**
  *
@@ -100,15 +100,15 @@ public class ArrayMap<K, V> implements MyMap<K, V> {
 
 
     public static void main(String[] args) {
-                ArrayMap<String, Integer> arrayMap = new ArrayMap();
-                Integer a = arrayMap.put("A", 40);
-                log.info("{},{}", a, arrayMap.size);
-                a = arrayMap.put("A", 30);
-                log.info("{},{}", a, arrayMap.size);
-                a = arrayMap.put("B", 40);
-                log.info("{},{}", a, arrayMap.size);
-                a = arrayMap.get("A");
-                log.info("{},{}", a, arrayMap.size);
+        ArrayMap<String, Integer> arrayMap = new ArrayMap();
+        Integer a = arrayMap.put("A", 40);
+        log.info("{},{}", a, arrayMap.size);
+        a = arrayMap.put("A", 30);
+        log.info("{},{}", a, arrayMap.size);
+        a = arrayMap.put("B", 40);
+        log.info("{},{}", a, arrayMap.size);
+        a = arrayMap.get("A");
+        log.info("{},{}", a, arrayMap.size);
         //        log.info("{}", hash("345") % 18);
         //        log.info("{}", hash("345") & (18 - 1));
     }
