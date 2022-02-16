@@ -1,6 +1,27 @@
 # ThreadLocal
 ThreadLocal是一个本地线程副本变量工具类。主要用于将私有线程和该线程存放的副本对象做一个映射，
 各个线程之间的变量互不干扰，在高并发场景下，可以实现无状态的调用，特别适用于各个线程依赖不通的变量值完成操作的场景。
+
+每个Thread线程内部都有一个threadLocals，结构为ThreadLocalMap。
+    void createMap(Thread t, T firstValue) {
+        t.threadLocals = new ThreadLocalMap(this(threadLocal对象), firstValue);
+    }
+Map里面存储线程本地对象ThreadLocal（key）和线程的变量副本（value）。
+Thread内部的Map是由ThreadLocal维护，ThreadLocal负责向map获取和设置线程的变量值。
+一个Thread可以有多个ThreadLocal。
+    public T get() {
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null) {
+            ThreadLocalMap.Entry e = map.getEntry(this);
+            if (e != null) {
+                @SuppressWarnings("unchecked")
+                T result = (T)e.value;
+                return result;
+            }
+        }
+        return setInitialValue();
+    }
 每个ThreadLocal只能保存一个变量副本，此方式能避免线程争抢Session，提高并发下的安全性。
 ThreadLocal<Session> threadLocal = new ThreadLocal<Session>();
 try {
