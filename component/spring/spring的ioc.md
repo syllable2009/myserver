@@ -53,7 +53,38 @@ Spring内部会将该对象加入到Spring容器中，方法名默认为容器�
 在XML引用JavaConfig
 使用<bean>节点就行了
 
-    
+#ioc的演化史
+#Spring提供了好几种的方式来给属性赋值
+1) 通过构造函数
+    <!--创建userService对象-->
+    <bean id="userService" class="UserService">
+        <!--要想在userService层中能够引用到userDao，就必须先创建userDao对象-->
+        <constructor-arg index="0" name="userDao" type="UserDao" ref="userDao"></constructor-arg>
+    </bean>
+2) 通过set方法给属性注入值
+    <bean id="userService" class="UserService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+3) p名称空间
+  <!--不用写property节点了，直接使用p名称空间-->
+  <bean id="userService" class="UserService" p:userDao-ref="userDao"/>
+4)自动装配(了解)
+Spring还提供了自动装配的功能，能够非常简化我们的配置
+自动装载默认是不打开的，自动装配常用的可分为两种：
+根据名字来装配
+  <bean id="userDao" class="UserDao"/>
+
+    <!--
+        1.通过名字来自动装配
+        2.发现userService中有个叫userDao的属性
+        3.看看IOC容器中没有叫userDao的对象
+        4.如果有，就装配进去
+    -->
+    <bean id="userService" class="UserService" autowire="byName"/>
+根据类型类装配
+    <bean id="userService" class="UserService" autowire="byType"/>
+5) 注解
+    @Autowired  
 
 
              

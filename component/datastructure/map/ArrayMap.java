@@ -111,5 +111,7 @@ public class ArrayMap<K, V> implements MyMap<K, V> {
         log.info("{},{}", a, arrayMap.size);
         //        log.info("{}", hash("345") % 18);
         //        log.info("{}", hash("345") & (18 - 1));
+
+     
     }
 }
